@@ -27,6 +27,7 @@ void EMGBeginCollectingLibraries(void);
 + (void)stopRecording:(void (^)(NSDictionary *))stopped;
 // Must be called on the main thread, before setupStackRecording is called
 + (void)setup;
++ (void)stop;
 + (NSDictionary *)getResults;
 + (BOOL)isRecording;
 

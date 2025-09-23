@@ -36,11 +36,15 @@ EMGStackTraceRecorder &getRecorder() {
 }
 
 + (void)stopRecording:(void (^)(NSDictionary *))stopped {
-    [sStackRecordingThread cancel];
-    sStackRecordingThread = nil;
+  [self stop];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         stopped([EMGTracer getResults]);
     });
+}
+
++ (void)stop {
+  [sStackRecordingThread cancel];
+  sStackRecordingThread = nil;
 }
 
 + (NSDictionary *)getResults {
