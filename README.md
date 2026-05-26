@@ -26,6 +26,16 @@ Add this repo as a swift package (either in Xcode or your Package.swift file) us
 
 Alternatively, run `./build.sh` to build the xcframework `ETTrace.xcframework`. Link the xcframework to your app.
 
+### Building the runner from source
+
+To build the `ETTraceRunner` binary yourself instead of using the Homebrew install, run:
+
+```sh
+SIGNING_IDENTITY="Your Developer ID" ./build_runner.sh
+```
+
+This archives the `ETTraceRunner` scheme and copies the signed binary to `./ETTraceRunner` in the project root. Replace `Your Developer ID` with a valid codesigning identity from `security find-identity -v -p codesigning`.
+
 > [!NOTE]
 > Linking the framework to your app is the only installation step, there are no code changes you need to make.
 
@@ -41,9 +51,42 @@ Our users love ETTrace and find it essential in their iOS development process. H
 
 ## Using
 
-Launch your app and run `ettrace` or `ettrace --simulator`. After profiling, the result will be displayed on https://emergetools.com/flamegraph
+### Starting ETTrace
 
-Note: Always launch the app by manually tapping the icon on the iOS homescreen, running the app through Xcode can result in inaccurate results.
+For a physical device, launch your app manually (by tapping its icon on the home screen) and then run:
+
+```sh
+ettrace
+```
+
+For a simulator, launch your app and run:
+
+```sh
+ettrace --simulator
+```
+
+Once you're done profiling, press **Return** or **Ctrl-C** to stop recording. The result will be displayed on https://emergetools.com/flamegraph
+
+> [!NOTE]
+> Always launch the app by manually tapping the icon — running via Xcode can result in inaccurate results.
+
+### Launching an app by bundle ID (simulator only)
+
+Instead of launching the app manually, ETTrace can launch it for you and profile from `main()`:
+
+```sh
+ettrace --simulator --bundle-id com.example.MyApp
+```
+
+If more than one simulator is currently booted, specify which one with `--device`:
+
+```sh
+ettrace --simulator --bundle-id com.example.MyApp --device "iPhone 16 Pro"
+```
+
+`--device` accepts either a simulator UDID or a device name as shown in Simulator.app. You can list booted simulators with `xcrun simctl list devices booted`.
+
+When `--bundle-id` is used, ETTrace passes the necessary environment variables to the app via `SIMCTL_CHILD_*` so recording starts immediately at load time — no force-quit/relaunch round-trip is needed. The `--launch` flag is implied and does not need to be specified separately.
 
 ## dSYMs
 
