@@ -31,10 +31,10 @@ Alternatively, run `./build.sh` to build the xcframework `ETTrace.xcframework`. 
 To build the `ETTraceRunner` binary yourself instead of using the Homebrew install, run:
 
 ```sh
-SIGNING_IDENTITY="Your Developer ID" ./build_runner.sh
+./build_runner.sh
 ```
 
-This archives the `ETTraceRunner` scheme and copies the signed binary to `./ETTraceRunner` in the project root. Replace `Your Developer ID` with a valid codesigning identity from `security find-identity -v -p codesigning`.
+This archives the `ETTraceRunner` scheme and copies the binary to `./ETTraceRunner` in the project root.
 
 > [!NOTE]
 > Linking the framework to your app is the only installation step, there are no code changes you need to make.
