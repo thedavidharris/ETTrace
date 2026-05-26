@@ -34,7 +34,7 @@ To build the `ETTraceRunner` binary yourself instead of using the Homebrew insta
 ./build_runner.sh
 ```
 
-This archives the `ETTraceRunner` scheme and copies the binary to `./ETTraceRunner` in the project root.
+This archives the `ETTraceRunner` scheme and copies the binary to `./ETTraceRunner` in the project root. Codesigning is optional — if `SIGNING_IDENTITY` is not set the binary will still work for local use.
 
 > [!NOTE]
 > Linking the framework to your app is the only installation step, there are no code changes you need to make.
